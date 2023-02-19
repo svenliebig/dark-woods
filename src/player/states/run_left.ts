@@ -9,9 +9,9 @@ export class RunLeft extends State {
   }
 
   override enter() {
-    this.player.setImageSource("/assets/player_run_right.png");
+    this.player.image = this.player.left;
     // TODO maxSpeed
-    this.player.vx = -10;
+    this.player.vx = -this.player.maxSpeed;
   }
 
   handleInput(input: UserEvents) {

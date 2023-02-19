@@ -8,6 +8,7 @@ export abstract class Idle extends State {
   }
 
   override enter() {
+    this.player.frameY = 0;
     this.player.vx = 0;
   }
 }

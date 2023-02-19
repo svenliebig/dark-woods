@@ -10,7 +10,7 @@ export class IdleRight extends Idle {
 
   override enter() {
     super.enter();
-    this.player.setImageSource("/assets/player_idle_right.png");
+    this.player.image = this.player.right;
   }
 
   handleInput(input: UserEvents) {
@@ -18,6 +18,10 @@ export class IdleRight extends Idle {
       this.player.setState(StateDefinitions.IDLE_LEFT);
     } else if (input === "press_ArrowRight") {
       this.player.setState(StateDefinitions.RUN_RIGHT);
+    } else if (input === "press_ArrowUp") {
+      this.player.setState(StateDefinitions.JUMP);
+    } else if (input === "press_ArrowDown") {
+      this.player.setState(StateDefinitions.CROUCH);
     }
   }
 }

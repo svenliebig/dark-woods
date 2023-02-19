@@ -16,6 +16,12 @@ export class InputHandler {
     this.lastKey = "" as any;
     window.addEventListener("keydown", (e) => {
       switch (e.key) {
+        case Keys.ArrowDown:
+          this.lastKey = "press_ArrowDown";
+          break;
+        case Keys.ArrowUp:
+          this.lastKey = "press_ArrowUp";
+          break;
         case Keys.ArrowLeft:
           this.lastKey = "press_ArrowLeft";
           break;
@@ -36,7 +42,12 @@ export class InputHandler {
         case Keys.ArrowRight:
           this.lastKey = "release_ArrowRight";
           break;
-
+        case Keys.ArrowDown:
+          this.lastKey = "release_ArrowDown";
+          break;
+        case Keys.ArrowUp:
+          this.lastKey = "release_ArrowUp";
+          break;
         default:
           break;
       }

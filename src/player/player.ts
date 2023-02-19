@@ -5,13 +5,14 @@ import { RenderedSprite } from "../rendered_sprite";
 import { StateDefinitions } from "./states/definitions";
 import { IdleLeft } from "./states/idle_left";
 import { IdleRight } from "./states/idle_right";
+import { Jump } from "./states/jump";
 import { RunLeft } from "./states/run_left";
 import { RunRight } from "./states/run_right";
 import { State } from "./states/_base";
 
 export class Player extends RenderedSprite {
-  protected spriteWidth: number = 80;
-  protected spriteHeight: number = 80;
+  protected spriteWidth: number = 112;
+  protected spriteHeight: number = 131;
 
   public x: number;
   public y: number;
@@ -26,20 +27,29 @@ export class Player extends RenderedSprite {
   public vx = 0;
   public vy = 0;
 
-  public weight = 40;
+  public weight = 4;
+
+  public speed = 0;
+  public maxSpeed = 12;
+
+  public left = new Image();
+  public right = new Image();
 
   constructor(private game: Game) {
     super();
-    this.image.src = "/assets/player_idle.png";
+    this.right.src = "/assets/red_hood_right.png";
+    this.left.src = "/assets/red_hood_left.png";
+    this.image = this.right;
     this.width = this.spriteWidth * this.size;
     this.height = this.spriteHeight * this.size;
     this.x = 50;
-    this.y = game.height - this.width;
+    this.y = game.height - this.height;
 
     this.states.set(StateDefinitions.IDLE_LEFT, new IdleLeft(this));
     this.states.set(StateDefinitions.IDLE_RIGHT, new IdleRight(this));
     this.states.set(StateDefinitions.RUN_RIGHT, new RunRight(this));
     this.states.set(StateDefinitions.RUN_LEFT, new RunLeft(this));
+    this.states.set(StateDefinitions.JUMP, new Jump(this));
 
     this.setState(StateDefinitions.IDLE_RIGHT);
   }
@@ -48,14 +58,31 @@ export class Player extends RenderedSprite {
     this.state.handleInput(input.lastKey);
 
     this.x += this.vx;
+    this.y += this.vy;
+
+    if (!this.onGround()) {
+      this.vy += this.weight;
+    } else {
+      this.vy = 0;
+    }
+
     const maxRight = this.game.width - this.width;
     if (this.x < 0) this.x = 0;
     else if (this.x > maxRight) this.x = maxRight;
   }
 
   setState(sd: StateDefinitions) {
-    this.state = this.states.get(sd)!;
-    this.state.enter();
+    const s = this.states.get(sd);
+    if (!s) {
+      console.log(`state ${sd} is not registered in Player`);
+    } else {
+      this.state = s;
+      this.state.enter();
+    }
+  }
+
+  onGround() {
+    return this.y >= this.game.height - this.width;
   }
 
   public override draw(ctx: CanvasRenderingContext2D): void {
@@ -65,6 +92,18 @@ export class Player extends RenderedSprite {
       size: fontSize,
     });
     renderText(ctx, `VX / VY: ${this.vx} / ${this.vy}`, this.game.width - 260, 40 + fontSize, {
+      size: fontSize,
+    });
+    renderText(ctx, `FrameX: ${this.frameX}`, this.game.width - 260, 70 + fontSize, {
+      size: fontSize,
+    });
+    renderText(ctx, `FrameY: ${this.frameY}`, this.game.width - 260, 100 + fontSize, {
+      size: fontSize,
+    });
+    renderText(ctx, `PlayerX: ${this.x}`, this.game.width - 260, 130 + fontSize, {
+      size: fontSize,
+    });
+    renderText(ctx, `PlayerY: ${this.y}`, this.game.width - 260, 160 + fontSize, {
       size: fontSize,
     });
   }
