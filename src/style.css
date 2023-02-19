@@ -1,9 +1,10 @@
-html, body, #app {
+html, body {
 	background-color: rgb(245, 234, 214);
 	padding: 0;
 	margin: 0;
 	height: 100vh;
 	font-family: sans-serif;
+	overflow: hidden;
 }
 
 * {
@@ -11,7 +12,5 @@ html, body, #app {
 }
 
 canvas {
-	border: 2px solid black;
-	margin-left: 5px;
-	margin-top: 5px;
+	border: 1px solid blue;
 }
