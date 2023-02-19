@@ -1,0 +1,17 @@
+html, body, #app {
+	background-color: rgb(245, 234, 214);
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+	font-family: sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+canvas {
+	border: 2px solid black;
+	margin-left: 5px;
+	margin-top: 5px;
+}
