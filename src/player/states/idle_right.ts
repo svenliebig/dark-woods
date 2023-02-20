@@ -16,7 +16,6 @@ export class IdleRight extends Idle {
   override enter() {
     console.log(`Enter State: ${this.name}`);
     super.enter();
-    this.player.currentFrame = 0;
     this.player.image = image;
     this.player.frames = frames;
   }

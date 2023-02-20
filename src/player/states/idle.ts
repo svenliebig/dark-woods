@@ -9,6 +9,7 @@ export abstract class Idle extends State {
 
   override enter() {
     this.player.vx = 0;
+    this.player.currentFrame = 0;
     this.player.fpsTimer.changeFPS(20);
   }
 }

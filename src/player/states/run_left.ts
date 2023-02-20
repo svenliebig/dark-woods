@@ -7,7 +7,7 @@ import { State } from "./_base";
 const frames = [...Array.from(new Array(24)).map((_, i) => [i, 0])];
 
 const image = document.createElement("img");
-image.src = "/assets/player_run_right.png";
+image.src = "/assets/player_run_left.png";
 
 export class RunLeft extends Run {
   constructor(protected player: Player) {
