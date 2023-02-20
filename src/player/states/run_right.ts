@@ -1,15 +1,23 @@
 import { UserEvents } from "../../input_handler";
 import { Player } from "../player";
 import { StateDefinitions } from "./definitions";
+import { Run } from "./run";
 import { State } from "./_base";
 
-export class RunRight extends State {
-  constructor(private player: Player) {
-    super(StateDefinitions.RUN_RIGHT);
+const frames = [...Array.from(new Array(24)).map((_, i) => [i, 0])];
+
+const image = document.createElement("img");
+image.src = "/assets/player_run_right.png";
+
+export class RunRight extends Run {
+  constructor(protected player: Player) {
+    super(StateDefinitions.RUN_RIGHT, player);
   }
 
   override enter() {
-    this.player.image = this.player.right;
+    super.enter();
+    this.player.image = image;
+    this.player.frames = frames;
     // TODO maxSpeed
     this.player.vx = this.player.maxSpeed;
   }

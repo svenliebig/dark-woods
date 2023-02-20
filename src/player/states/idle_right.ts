@@ -3,14 +3,22 @@ import { Player } from "../player";
 import { StateDefinitions } from "./definitions";
 import { Idle } from "./idle";
 
+const image = document.createElement("img");
+image.src = "/assets/player_idle_right.png";
+
+const frames = [...Array.from(new Array(18)).map((_, i) => [i, 0])];
+
 export class IdleRight extends Idle {
   constructor(player: Player) {
     super(StateDefinitions.IDLE_RIGHT, player);
   }
 
   override enter() {
+    console.log(`Enter State: ${this.name}`);
     super.enter();
-    this.player.image = this.player.right;
+    this.player.currentFrame = 0;
+    this.player.image = image;
+    this.player.frames = frames;
   }
 
   handleInput(input: UserEvents) {

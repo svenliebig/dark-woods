@@ -9,8 +9,10 @@ export class IdleLeft extends Idle {
   }
 
   override enter() {
+    console.log(`Enter State: ${this.name}`);
     super.enter();
-    this.player.image = this.player.left;
+    this.player.currentFrame = 0;
+    this.player.frames = [];
   }
 
   handleInput(input: UserEvents) {

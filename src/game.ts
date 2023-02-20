@@ -30,8 +30,12 @@ export class Game {
 
   draw(d: number) {
     this.ctx.clearRect(0, 0, this.width, this.height);
+
+    this.ctx.fillStyle = "rbg(30, 30, 30)";
+    this.ctx.fillRect(0, this.height - 75, this.width, this.player.height);
     this.player.draw(this.ctx);
     const fontSize = 30;
+
     renderText(this.ctx, `Last Key: ${this.input.lastKey}`, 10, 40 + fontSize, { size: fontSize });
     renderText(this.ctx, `Deltatime: ${d}ms`, 10, 70 + fontSize, { size: fontSize });
     renderText(this.ctx, `FPS: ${1000 / d}`, 10, 100 + fontSize, { size: fontSize });

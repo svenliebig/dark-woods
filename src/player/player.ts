@@ -2,6 +2,7 @@ import { Game } from "../game";
 import { InputHandler } from "../input_handler";
 import { renderText } from "../render/text";
 import { RenderedSprite } from "../rendered_sprite";
+import { FPSTimer } from "../timer";
 import { StateDefinitions } from "./states/definitions";
 import { IdleLeft } from "./states/idle_left";
 import { IdleRight } from "./states/idle_right";
@@ -11,8 +12,11 @@ import { RunRight } from "./states/run_right";
 import { State } from "./states/_base";
 
 export class Player extends RenderedSprite {
-  protected spriteWidth: number = 112;
-  protected spriteHeight: number = 131;
+  protected spriteWidth: number = 80;
+  protected spriteHeight: number = 80;
+
+  public frames: Array<Array<number>> = [];
+  public currentFrame: number = 0;
 
   public x: number;
   public y: number;
@@ -32,14 +36,10 @@ export class Player extends RenderedSprite {
   public speed = 0;
   public maxSpeed = 12;
 
-  public left = new Image();
-  public right = new Image();
+  public fpsTimer = new FPSTimer(20);
 
   constructor(private game: Game) {
     super();
-    this.right.src = "/assets/red_hood_right.png";
-    this.left.src = "/assets/red_hood_left.png";
-    this.image = this.right;
     this.width = this.spriteWidth * this.size;
     this.height = this.spriteHeight * this.size;
     this.x = 50;
@@ -54,7 +54,8 @@ export class Player extends RenderedSprite {
     this.setState(StateDefinitions.IDLE_RIGHT);
   }
 
-  override update(_: number, input: InputHandler) {
+  override update(delta: number, input: InputHandler) {
+    this.fpsTimer.update(delta);
     this.state.handleInput(input.lastKey);
 
     this.x += this.vx;
@@ -64,6 +65,22 @@ export class Player extends RenderedSprite {
       this.vy += this.weight;
     } else {
       this.vy = 0;
+    }
+
+    if (this.frames.length > 0 && this.fpsTimer.hasPassed()) {
+      this.fpsTimer.reset();
+      try {
+        this.frameX = this.frames[this.currentFrame][0];
+        this.frameY = this.frames[this.currentFrame][1];
+        this.currentFrame = (this.currentFrame + 1) % this.frames.length;
+      } catch (e) {
+        console.error(e);
+        console.log({
+          currentFrame: this.currentFrame,
+          frames: this.frames,
+        });
+        throw e;
+      }
     }
 
     const maxRight = this.game.width - this.width;
