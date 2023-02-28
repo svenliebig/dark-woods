@@ -7,13 +7,16 @@ import { StateDefinitions } from "./states/definitions";
 import { IdleLeft } from "./states/idle_left";
 import { IdleRight } from "./states/idle_right";
 import { Jump } from "./states/jump";
+import { JumpLeft } from "./states/jump_left";
+import { JumpRecoveryRight } from "./states/jump_recovery_right";
+import { JumpRight } from "./states/jump_right";
 import { RunLeft } from "./states/run_left";
 import { RunRight } from "./states/run_right";
 import { State } from "./states/_base";
 
 export class Player extends RenderedSprite {
-  protected spriteWidth: number = 80;
-  protected spriteHeight: number = 80;
+  protected spriteWidth: number = 60;
+  protected spriteHeight: number = 60;
 
   public frames: Array<Array<number>> = [];
   public currentFrame: number = 0;
@@ -31,7 +34,7 @@ export class Player extends RenderedSprite {
   public vx = 0;
   public vy = 0;
 
-  public weight = 4;
+  public weight = .2;
 
   public speed = 0;
   public maxSpeed = 12;
@@ -49,7 +52,9 @@ export class Player extends RenderedSprite {
     this.states.set(StateDefinitions.IDLE_RIGHT, new IdleRight(this));
     this.states.set(StateDefinitions.RUN_RIGHT, new RunRight(this));
     this.states.set(StateDefinitions.RUN_LEFT, new RunLeft(this));
-    this.states.set(StateDefinitions.JUMP, new Jump(this));
+    this.states.set(StateDefinitions.JUMP_RIGHT, new JumpRight(this));
+    this.states.set(StateDefinitions.JUMP_RECOVERY_RIGHT, new JumpRecoveryRight(this));
+    this.states.set(StateDefinitions.JUMP_LEFT, new JumpLeft(this));
 
     this.setState(StateDefinitions.IDLE_RIGHT);
   }
@@ -72,6 +77,9 @@ export class Player extends RenderedSprite {
       try {
         this.frameX = this.frames[this.currentFrame][0];
         this.frameY = this.frames[this.currentFrame][1];
+        if (this.state.name === StateDefinitions.JUMP_RECOVERY_RIGHT) {
+          console.log(this.frameX, this.frameY)
+        }
         this.currentFrame = (this.currentFrame + 1) % this.frames.length;
       } catch (e) {
         console.error(e);
@@ -83,9 +91,15 @@ export class Player extends RenderedSprite {
       }
     }
 
+    // calculate the max right position of the player
     const maxRight = this.game.width - this.width;
     if (this.x < 0) this.x = 0;
     else if (this.x > maxRight) this.x = maxRight;
+
+    // calculate the max bottom position of the player
+    const maxBottom = this.game.height - this.height;
+    if (this.y > maxBottom) this.y = maxBottom;
+
   }
 
   setState(sd: StateDefinitions) {

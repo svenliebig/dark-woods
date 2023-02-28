@@ -2,12 +2,11 @@ import { UserEvents } from "../../input_handler";
 import { Player } from "../player";
 import { StateDefinitions } from "./definitions";
 import { Run } from "./run";
-import { State } from "./_base";
 
 const frames = [...Array.from(new Array(24)).map((_, i) => [i, 0])];
 
 const image = document.createElement("img");
-image.src = "/assets/player_run_right.png";
+image.src = "/assets/player_run_right_60x60.png";
 
 export class RunRight extends Run {
   constructor(protected player: Player) {

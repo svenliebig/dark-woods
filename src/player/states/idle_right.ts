@@ -4,7 +4,7 @@ import { StateDefinitions } from "./definitions";
 import { Idle } from "./idle";
 
 const image = document.createElement("img");
-image.src = "/assets/player_idle_right.png";
+image.src = "/assets/player_idle_right_60x60.png";
 
 const frames = [...Array.from(new Array(18)).map((_, i) => [i, 0])];
 
@@ -18,6 +18,7 @@ export class IdleRight extends Idle {
     super.enter();
     this.player.image = image;
     this.player.frames = frames;
+    this.player.fpsTimer.changeFPS(20)
   }
 
   handleInput(input: UserEvents) {
@@ -26,7 +27,7 @@ export class IdleRight extends Idle {
     } else if (input === "press_ArrowRight") {
       this.player.setState(StateDefinitions.RUN_RIGHT);
     } else if (input === "press_ArrowUp") {
-      this.player.setState(StateDefinitions.JUMP);
+      this.player.setState(StateDefinitions.JUMP_RIGHT);
     } else if (input === "press_ArrowDown") {
       this.player.setState(StateDefinitions.CROUCH);
     }

@@ -1,6 +1,6 @@
 export class Timer {
   private timer = 0;
-  constructor(private interval: number) {}
+  constructor(private interval: number) { }
 
   update(delta: number) {
     this.timer += delta;
@@ -28,5 +28,6 @@ export class FPSTimer extends Timer {
 
   changeFPS(fps: number) {
     this.changeInterval(1000 / fps);
+    return this;
   }
 }
