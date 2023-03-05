@@ -1,4 +1,5 @@
 import { Game } from "./game";
+import { ForestSound } from "./player/sounds/sound";
 import "./style.css";
 
 (function() {
@@ -11,6 +12,12 @@ import "./style.css";
     // c.height = document.body.clientHeight;
     // game.resize()
   });
+
+  c.addEventListener("click", (e) => {
+    if (!ForestSound.isPlaying()) {
+      ForestSound.play();
+    }
+  })
 
   const game = new Game(c.getContext("2d")!, c.width, c.height, () => { });
 

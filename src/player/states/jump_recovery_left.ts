@@ -1,4 +1,5 @@
 import { Player } from "../player";
+import { FootstepsSound } from "../sounds/sound";
 import { StateDefinitions } from "./definitions";
 import { State } from "./_base";
 
@@ -27,6 +28,7 @@ export class JumpRecoveryLeft extends State {
     this.player.image = image;
     this.player.frames = frames;
     this.player.fpsTimer.changeFPS(15).reset()
+    FootstepsSound.play(Math.floor(Math.random() * FootstepsSound.max()));
   }
 
   handleInput() {

@@ -10,8 +10,22 @@ export class Sound {
     this.sound.play();
   }
 
+  repeat() {
+    this.sound.currentTime = 0;
+    this.sound.loop = true;
+    this.sound.play();
+  }
+
   stop() {
     this.sound.pause();
+  }
+
+  setVolume(volume: number) {
+    this.sound.volume = volume;
+  }
+
+  isPlaying() {
+    return !this.sound.paused;
   }
 }
 
@@ -38,4 +52,18 @@ class Footsteps {
   }
 }
 
+class Forest {
+  private sound: Sound = new Sound(new Audio("/assets/sounds/ambient/forest.flac"))
+
+  play() {
+    this.sound.setVolume(.2);
+    this.sound.repeat();
+  }
+
+  isPlaying() {
+    return this.sound.isPlaying();
+  }
+}
+
+export const ForestSound = new Forest();
 export const FootstepsSound = new Footsteps();
