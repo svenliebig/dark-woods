@@ -53,7 +53,8 @@ export class Player extends RenderedSprite {
 
   public stats = {
     maxAirSpeed: 5,
-    inertia: .1
+    inertia: .1,
+    jumpForce: 12,
   }
 
   constructor(private game: Game) {

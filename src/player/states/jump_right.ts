@@ -21,9 +21,12 @@ export class JumpRight extends State {
     this.player.currentFrame = 0;
     this.player.frameX = frames[0][0];
     this.player.frameY = frames[0][1];
-    this.player.vy = -12; // TODO: player jump force
     this.player.image = image;
     this.player.frames = frames;
+
+    if (this.player.onGround()) {
+      this.player.vy = -this.player.stats.jumpForce; 
+    }
   }
 
   handleInput(input: UserEvents) {
