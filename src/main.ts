@@ -3,12 +3,12 @@ import "./style.css";
 
 (function() {
   const c: HTMLCanvasElement = document.querySelector("#main_canvas")!;
-  c.width = document.body.clientWidth;
-  c.height = document.body.clientHeight;
+  c.width = 1400// document.body.clientWidth;
+  c.height = 900 // document.body.clientHeight;
 
   window.addEventListener("resize", () => {
-    c.width = document.body.clientWidth;
-    c.height = document.body.clientHeight;
+    // c.width = document.body.clientWidth;
+    // c.height = document.body.clientHeight;
     // game.resize()
   });
 

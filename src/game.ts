@@ -1,3 +1,4 @@
+import { Background } from "./background";
 import { InputHandler } from "./input_handler";
 import { Player } from "./player/player";
 import { renderText } from "./render/text";
@@ -9,6 +10,7 @@ export class Game {
 
   private player: Player;
   private input: InputHandler;
+  private bg: Background;
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -20,6 +22,7 @@ export class Game {
     this.width = width;
     this.height = height;
     this.player = new Player(this);
+    this.bg = new Background(this);
     this.input = new InputHandler();
   }
 
@@ -31,8 +34,10 @@ export class Game {
   draw(d: number) {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
-    this.ctx.fillStyle = "rbg(30, 30, 30)";
+    this.ctx.fillStyle = "rgb(69, 61, 79)";
     this.ctx.fillRect(0, this.height - 75, this.width, this.player.height);
+    this.bg.draw(this.ctx);
+
     this.player.draw(this.ctx);
     const fontSize = 30;
 

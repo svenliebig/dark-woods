@@ -1,5 +1,5 @@
 html, body {
-	background-color: rgb(245, 234, 214);
+	background-color: #242324;
 	padding: 0;
 	margin: 0;
 	height: 100vh;
@@ -7,10 +7,24 @@ html, body {
 	overflow: hidden;
 }
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+div {
+  width: 1405px;
+  height: 905px;
+  overflow: auto;
+}
+
 * {
 	box-sizing: border-box;
 }
 
 canvas {
-	border: 1px solid blue;
+	border: 1px solid #453D4F;
+  width: 1400px;
 }

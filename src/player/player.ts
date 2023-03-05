@@ -49,6 +49,8 @@ export class Player extends RenderedSprite {
 
   public fpsTimer = new FPSTimer(20);
 
+  public ground: number
+
   public stats = {
     maxAirSpeed: 5,
     inertia: .1
@@ -59,7 +61,8 @@ export class Player extends RenderedSprite {
     this.width = this.spriteWidth * this.size;
     this.height = this.spriteHeight * this.size;
     this.x = 50;
-    this.y = game.height - this.height;
+    this.y = game.height - this.height - 92;
+    this.ground = this.y;
 
     this.states.set(StateDefinitions.IDLE_LEFT, new IdleLeft(this));
     this.states.set(StateDefinitions.IDLE_RIGHT, new IdleRight(this));
@@ -115,9 +118,7 @@ export class Player extends RenderedSprite {
     else if (this.x > maxRight) this.x = maxRight;
 
     // calculate the max bottom position of the player
-    const maxBottom = this.game.height - this.height;
-    if (this.y > maxBottom) this.y = maxBottom;
-
+    if (this.y > this.ground) this.y = this.ground;
   }
 
   setState(sd: StateDefinitions) {
@@ -132,7 +133,7 @@ export class Player extends RenderedSprite {
   }
 
   onGround() {
-    return this.y >= this.game.height - this.width;
+    return this.y >= this.ground
   }
 
   public override draw(ctx: CanvasRenderingContext2D): void {
