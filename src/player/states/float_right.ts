@@ -20,7 +20,7 @@ image.src = "/assets/player_jump_right_60x60.png";
 
 export class FloatRight extends State {
   constructor(protected player: Player) {
-    super(StateDefinitions.FALL_RIGHT);
+    super(StateDefinitions.FLOAT_RIGHT);
   }
 
   override enter() {

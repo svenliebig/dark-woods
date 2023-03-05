@@ -40,7 +40,7 @@ export class JumpLeft extends State {
     }
 
     if (this.player.vy > -3) {
-      this.player.setState(StateDefinitions.FLOAT_RIGHT);
+      this.player.setState(StateDefinitions.FLOAT_LEFT);
     }
   }
 }

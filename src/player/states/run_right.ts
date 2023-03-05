@@ -15,10 +15,11 @@ export class RunRight extends Run {
 
   override enter() {
     super.enter();
+    this.player.frameX = frames[0][0];
+    this.player.frameY = frames[0][1];
     this.player.image = image;
     this.player.frames = frames;
-    // TODO maxSpeed
-    this.player.vx = this.player.maxSpeed;
+    this.player.vx = this.player.maxSpeed
   }
 
   handleInput(input: UserEvents) {

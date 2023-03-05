@@ -15,6 +15,8 @@ export class IdleRight extends Idle {
 
   override enter() {
     super.enter();
+    this.player.frameX = frames[0][0];
+    this.player.frameY = frames[0][1];
     this.player.image = image;
     this.player.frames = frames;
     this.player.fpsTimer.changeFPS(20)
