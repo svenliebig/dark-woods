@@ -3,6 +3,9 @@ export enum Keys {
   ArrowRight = "ArrowRight",
   ArrowUp = "ArrowUp",
   ArrowDown = "ArrowDown",
+  A = "a",
+  D = "d",
+  S = "s",
   Space = " ",
 }
 
@@ -32,6 +35,15 @@ export class InputHandler {
         case Keys.Space:
           this.lastKey = "press_Space";
           break;
+        case Keys.A:
+          this.lastKey = "press_A";
+          break;
+        case Keys.D:
+          this.lastKey = "press_D";
+          break;
+        case Keys.S:
+          this.lastKey = "press_S";
+          break;
 
         default:
           break;
@@ -55,6 +67,16 @@ export class InputHandler {
         case Keys.Space:
           this.lastKey = "release_Space";
           break;
+        case Keys.A:
+          this.lastKey = "release_A";
+          break;
+        case Keys.D:
+          this.lastKey = "release_D";
+          break;
+        case Keys.S:
+          this.lastKey = "release_S";
+          break;
+
         default:
           break;
       }

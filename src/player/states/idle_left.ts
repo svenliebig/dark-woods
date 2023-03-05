@@ -20,13 +20,13 @@ export class IdleLeft extends Idle {
   }
 
   handleInput(input: UserEvents) {
-    if (input === "press_ArrowRight") {
+    if (input === "press_ArrowRight" || input === "press_D") {
       this.player.setState(StateDefinitions.IDLE_RIGHT);
-    } else if (input === "press_ArrowLeft") {
+    } else if (input === "press_ArrowLeft" || input === "press_A") {
       this.player.setState(StateDefinitions.RUN_LEFT);
     } else if (input === "press_ArrowUp" || input === "press_Space") {
       this.player.setState(StateDefinitions.START_JUMP_LEFT);
-    } else if (input === "press_ArrowDown") {
+    } else if (input === "press_ArrowDown" || input === "press_S") {
       this.player.setState(StateDefinitions.CROUCH);
     }
   }

@@ -22,9 +22,9 @@ export class RunLeft extends Run {
   }
 
   handleInput(input: UserEvents) {
-    if (input === "press_ArrowRight") {
+    if (input === "press_ArrowRight" || input === "press_D") {
       this.player.setState(StateDefinitions.IDLE_RIGHT);
-    } else if (input === "release_ArrowLeft") {
+    } else if (input === "release_ArrowLeft" || input === "release_A") {
       this.player.setState(StateDefinitions.IDLE_LEFT);
     }
   }
