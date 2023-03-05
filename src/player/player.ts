@@ -4,19 +4,27 @@ import { renderText } from "../render/text";
 import { RenderedSprite } from "../rendered_sprite";
 import { FPSTimer } from "../timer";
 import { StateDefinitions } from "./states/definitions";
+import { FallLeft } from "./states/fall_left";
+import { FallRight } from "./states/fall_right";
+import { FloatLeft } from "./states/float_left";
+import { FloatRight } from "./states/float_right";
 import { IdleLeft } from "./states/idle_left";
 import { IdleRight } from "./states/idle_right";
-import { Jump } from "./states/jump";
 import { JumpLeft } from "./states/jump_left";
+import { JumpRecoveryLeft } from "./states/jump_recovery_left";
 import { JumpRecoveryRight } from "./states/jump_recovery_right";
 import { JumpRight } from "./states/jump_right";
 import { RunLeft } from "./states/run_left";
 import { RunRight } from "./states/run_right";
+import { StartJumpLeft } from "./states/start_jump_left";
+import { StartJumpRight } from "./states/start_jump_right";
 import { State } from "./states/_base";
 
 export class Player extends RenderedSprite {
   protected spriteWidth: number = 60;
   protected spriteHeight: number = 60;
+
+  public nextImage: HTMLImageElement | null = null;
 
   public frames: Array<Array<number>> = [];
   public currentFrame: number = 0;
@@ -34,12 +42,17 @@ export class Player extends RenderedSprite {
   public vx = 0;
   public vy = 0;
 
-  public weight = .2;
+  public weight = .15;
 
   public speed = 0;
   public maxSpeed = 12;
 
   public fpsTimer = new FPSTimer(20);
+
+  public stats = {
+    maxAirSpeed: 5,
+    inertia: .1
+  }
 
   constructor(private game: Game) {
     super();
@@ -52,9 +65,17 @@ export class Player extends RenderedSprite {
     this.states.set(StateDefinitions.IDLE_RIGHT, new IdleRight(this));
     this.states.set(StateDefinitions.RUN_RIGHT, new RunRight(this));
     this.states.set(StateDefinitions.RUN_LEFT, new RunLeft(this));
-    this.states.set(StateDefinitions.JUMP_RIGHT, new JumpRight(this));
-    this.states.set(StateDefinitions.JUMP_RECOVERY_RIGHT, new JumpRecoveryRight(this));
+
+    this.states.set(StateDefinitions.START_JUMP_LEFT, new StartJumpLeft(this));
+    this.states.set(StateDefinitions.START_JUMP_RIGHT, new StartJumpRight(this));
     this.states.set(StateDefinitions.JUMP_LEFT, new JumpLeft(this));
+    this.states.set(StateDefinitions.JUMP_RIGHT, new JumpRight(this));
+    this.states.set(StateDefinitions.FLOAT_LEFT, new FloatLeft(this));
+    this.states.set(StateDefinitions.FLOAT_RIGHT, new FloatRight(this));
+    this.states.set(StateDefinitions.FALL_LEFT, new FallLeft(this));
+    this.states.set(StateDefinitions.FALL_RIGHT, new FallRight(this));
+    this.states.set(StateDefinitions.JUMP_RECOVERY_LEFT, new JumpRecoveryLeft(this));
+    this.states.set(StateDefinitions.JUMP_RECOVERY_RIGHT, new JumpRecoveryRight(this));
 
     this.setState(StateDefinitions.IDLE_RIGHT);
   }
@@ -77,9 +98,6 @@ export class Player extends RenderedSprite {
       try {
         this.frameX = this.frames[this.currentFrame][0];
         this.frameY = this.frames[this.currentFrame][1];
-        if (this.state.name === StateDefinitions.JUMP_RECOVERY_RIGHT) {
-          console.log(this.frameX, this.frameY)
-        }
         this.currentFrame = (this.currentFrame + 1) % this.frames.length;
       } catch (e) {
         console.error(e);
@@ -106,9 +124,10 @@ export class Player extends RenderedSprite {
     const s = this.states.get(sd);
     if (!s) {
       console.log(`state ${sd} is not registered in Player`);
+      console.log("render with currentframe:", this.currentFrame)
     } else {
+      s.enter()
       this.state = s;
-      this.state.enter();
     }
   }
 
@@ -117,8 +136,15 @@ export class Player extends RenderedSprite {
   }
 
   public override draw(ctx: CanvasRenderingContext2D): void {
+    if (!!this.nextImage) {
+      this.image = this.nextImage;
+      this.nextImage = null
+    }
+
     super.draw(ctx);
     const fontSize = 30;
+    
+
     renderText(ctx, `State: ${this.state.name}`, this.game.width - 260, 10 + fontSize, {
       size: fontSize,
     });

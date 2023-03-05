@@ -3,6 +3,7 @@ export enum Keys {
   ArrowRight = "ArrowRight",
   ArrowUp = "ArrowUp",
   ArrowDown = "ArrowDown",
+  Space = " ",
 }
 
 type KeyValues = keyof typeof Keys;
@@ -28,6 +29,9 @@ export class InputHandler {
         case Keys.ArrowRight:
           this.lastKey = "press_ArrowRight";
           break;
+        case Keys.Space:
+          this.lastKey = "press_Space";
+          break;
 
         default:
           break;
@@ -47,6 +51,9 @@ export class InputHandler {
           break;
         case Keys.ArrowUp:
           this.lastKey = "release_ArrowUp";
+          break;
+        case Keys.Space:
+          this.lastKey = "release_Space";
           break;
         default:
           break;

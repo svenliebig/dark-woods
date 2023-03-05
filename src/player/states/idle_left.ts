@@ -24,8 +24,8 @@ export class IdleLeft extends Idle {
       this.player.setState(StateDefinitions.IDLE_RIGHT);
     } else if (input === "press_ArrowLeft") {
       this.player.setState(StateDefinitions.RUN_LEFT);
-    } else if (input === "press_ArrowUp") {
-      this.player.setState(StateDefinitions.JUMP_LEFT);
+    } else if (input === "press_ArrowUp" || input === "press_Space") {
+      this.player.setState(StateDefinitions.START_JUMP_LEFT);
     } else if (input === "press_ArrowDown") {
       this.player.setState(StateDefinitions.CROUCH);
     }

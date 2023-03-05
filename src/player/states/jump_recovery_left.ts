@@ -2,7 +2,7 @@ import { Player } from "../player";
 import { StateDefinitions } from "./definitions";
 import { State } from "./_base";
 
-// we don't use 2 images right now, because the character stands up in them
+// we don't use 2 images left now, because the character stands up in them
 const frames = [
   [15, 0],
   [16, 0],
@@ -12,11 +12,11 @@ const frames = [
 ];
 
 const image = document.createElement("img");
-image.src = "/assets/player_jump_right_60x60.png";
+image.src = "/assets/player_jump_left_60x60.png";
 
-export class JumpRecoveryRight extends State {
+export class JumpRecoveryLeft extends State {
   constructor(protected player: Player) {
-    super(StateDefinitions.JUMP_RECOVERY_RIGHT);
+    super(StateDefinitions.JUMP_RECOVERY_LEFT);
   }
 
   override enter() {
@@ -31,7 +31,7 @@ export class JumpRecoveryRight extends State {
 
   handleInput() {
     if (this.player.currentFrame === 4 && this.player.fpsTimer.hasPassed()) {
-      this.player.setState(StateDefinitions.IDLE_RIGHT);
+      this.player.setState(StateDefinitions.IDLE_LEFT);
     }
   }
 }

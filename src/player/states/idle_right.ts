@@ -14,7 +14,6 @@ export class IdleRight extends Idle {
   }
 
   override enter() {
-    console.log(`Enter State: ${this.name}`);
     super.enter();
     this.player.image = image;
     this.player.frames = frames;
@@ -26,8 +25,8 @@ export class IdleRight extends Idle {
       this.player.setState(StateDefinitions.IDLE_LEFT);
     } else if (input === "press_ArrowRight") {
       this.player.setState(StateDefinitions.RUN_RIGHT);
-    } else if (input === "press_ArrowUp") {
-      this.player.setState(StateDefinitions.JUMP_RIGHT);
+    } else if (input === "press_ArrowUp" || input === "press_Space") {
+      this.player.setState(StateDefinitions.START_JUMP_RIGHT);
     } else if (input === "press_ArrowDown") {
       this.player.setState(StateDefinitions.CROUCH);
     }

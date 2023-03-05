@@ -4,31 +4,32 @@ import { StateDefinitions } from "./definitions";
 import { State } from "./_base";
 
 const frames = [
-  [1, 0],
-  [2, 0],
-  [3, 0],
+  [12, 0],
+  [13, 0],
+  [14, 0],
+  [13, 0],
 ];
 
 const image = document.createElement("img");
 image.src = "/assets/player_jump_right_60x60.png";
 
-export class JumpRight extends State {
+export class FallRight extends State {
   constructor(protected player: Player) {
-    super(StateDefinitions.JUMP_RIGHT);
+    super(StateDefinitions.FALL_RIGHT);
   }
 
   override enter() {
     this.player.currentFrame = 0;
     this.player.frameX = frames[0][0];
     this.player.frameY = frames[0][1];
-    this.player.vy = -12; // TODO: player jump force
+
     this.player.image = image;
     this.player.frames = frames;
   }
 
   handleInput(input: UserEvents) {
     if (this.player.vx < 0) {
-      this.player.setState(StateDefinitions.JUMP_LEFT);
+      this.player.setState(StateDefinitions.FALL_LEFT);
     }
 
     if (input === "press_ArrowRight") {
@@ -39,8 +40,8 @@ export class JumpRight extends State {
       this.player.vx -= this.player.stats.inertia 
     }
 
-    if (this.player.vy > -3) {
-      this.player.setState(StateDefinitions.FLOAT_RIGHT);
+    if (this.player.onGround()) {
+      this.player.setState(StateDefinitions.JUMP_RECOVERY_RIGHT);
     }
   }
 }
