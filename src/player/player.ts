@@ -37,7 +37,7 @@ export class Player extends RenderedSprite {
   private states = new Map<StateDefinitions, State>();
   private state!: State;
 
-  private size = 5;
+  private size = 3;
 
   public vx = 0;
   public vy = 0;
@@ -45,7 +45,7 @@ export class Player extends RenderedSprite {
   public weight = .15;
 
   public speed = 0;
-  public maxSpeed = 12;
+  public maxSpeed = 10;
 
   public fpsTimer = new FPSTimer(20);
 

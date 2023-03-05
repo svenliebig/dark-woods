@@ -19,10 +19,18 @@ export class RunLeft extends Run {
     this.player.frameY = frames[0][1];
     this.player.image = image;
     this.player.frames = frames;
-    this.player.vx = -this.player.maxSpeed;
+    this.player.vx = -4
+    this.player.fpsTimer.changeFPS(18)
   }
 
   handleInput(input: UserEvents) {
+    if (this.player.vx > -this.player.maxSpeed) {
+      this.player.vx -= this.player.stats.inertia
+      this.player.fpsTimer.changeFPS(12 + this.player.vx * -2)
+    } else if (this.player.vx < -this.player.maxSpeed) {
+      this.player.vx = -this.player.maxSpeed
+    }
+
     if (input === "press_ArrowRight" || input === "press_D") {
       this.player.setState(StateDefinitions.IDLE_RIGHT);
     } else if (input === "release_ArrowLeft" || input === "release_A") {
